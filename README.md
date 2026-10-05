@@ -5,5 +5,5 @@ This project is a comprehensive data analytics ecosystem developed for the 6th-s
 **Autores**
 
 1. Anderson Granda --> Product Owner & QA
-2. 
+2. Isaac Bonilla --> SCRUM Master & Cybersecurity auditor
 3. Juan Fernandez --> Dev Team & Production
