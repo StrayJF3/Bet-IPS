@@ -1,2 +1,3 @@
 # Bet-IPS
-6th-Semester Final Project for the Information Systems Engineering program at UIDE. It consolidates the subjects of Machine Learning, Big Data, Cybersecurity, Project Planning, and Emerging Technologies. Developed by Isaac Bonilla, Juan Fernandez, and Anderson Granda
+## Predictive Pipeline for Sports Results
+This project is a comprehensive data analytics ecosystem developed for the 6th-semester Integrative Project in the Information Systems Engineering program at UIDE. The system automates the ingestion of sports statistics via REST APIs, executes robust data processing and curation (ETL), and trains Machine Learning models to predict the probability of match outcomes. The entire data lifecycle is underpinned by agile management methodologies and deployed on a scalable cloud infrastructure using AWS.
