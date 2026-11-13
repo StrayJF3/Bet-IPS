@@ -1,0 +1,17 @@
+# Reglas de calidad del backend. Revisar con `ruff check .` y formatear con `ruff format .`
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = [".venv", "data", "artifacts"]
+
+[tool.ruff.lint]
+# E/W estilo, F errores, I orden de imports, N nombres, B bugs comunes, C90 complejidad,
+# UP sintaxis moderna, SIM simplificaciones, RET returns, PL buenas practicas.
+select = ["E", "W", "F", "I", "N", "B", "C90", "UP", "SIM", "RET", "PL"]
+ignore = ["PLR2004"]  # numeros en comparaciones de las pruebas
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-statements = 40
