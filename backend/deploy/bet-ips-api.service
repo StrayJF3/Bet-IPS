@@ -1,0 +1,20 @@
+# Servicio systemd para la API en el EC2.
+# Copiar a /etc/systemd/system/bet-ips-api.service (ver BACKEND.md).
+[Unit]
+Description=Bet-IPS API de pronosticos (FastAPI + uvicorn)
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/bet-ips/backend
+EnvironmentFile=/opt/bet-ips/backend/.env
+ExecStart=/opt/bet-ips/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2 --proxy-headers
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
