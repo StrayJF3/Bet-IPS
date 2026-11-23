@@ -16,9 +16,9 @@ if (!parsed.success) {
 
 const apiBase = new URL(parsed.data.VITE_API_BASE_URL);
 
-if (import.meta.env.PROD && apiBase.protocol !== 'https:') {
-  throw new Error('En produccion la API del modelo debe usarse por HTTPS.');
-}
+// Nota: para el despliegue académico la API del modelo corre en el EC2 por HTTP
+// (http://IP:8000). Por eso no se exige HTTPS. En un despliegue real convendría
+// poner la API detrás de HTTPS y volver a exigirlo aquí.
 
 export const env = {
   API_BASE_URL: apiBase.origin,
