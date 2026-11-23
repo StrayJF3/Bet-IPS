@@ -22,14 +22,12 @@ La plataforma es una página pública sin cuentas de usuario: no hay login, sesi
 | CORS limitado a los dominios de `ALLOWED_ORIGINS`, solo `GET`/`POST` | `backend/app/main.py`, `backend/.env` |
 | Validación de entrada (solo las 48 selecciones, formato `^[a-z-]{2,30}$`, equipos distintos) | `PredictIn` en `backend/app/main.py` |
 | Errores 500 genéricos, sin trazas; Swagger desactivado en producción | `main.py`, `ENABLE_DOCS` |
-| uvicorn solo en `127.0.0.1`; Nginx como única entrada, con HTTPS (certbot) | `backend/deploy/bet-ips-api.service`, `backend/deploy/nginx-bet-ips.conf` |
-| Límite de 10 peticiones/s por IP, cuerpo máximo 4 KB, `server_tokens off`, rutas fuera de `/api/` → 404 | `backend/deploy/nginx-bet-ips.conf` |
-| Servicio sin privilegios (`NoNewPrivileges`, `ProtectSystem`) | `backend/deploy/bet-ips-api.service` |
-| Security Group: 22 solo desde tu IP; 80 y 443 abiertos; 8000 cerrado | `docs/BACKEND.md` |
-| El modelo (`model.joblib`) se genera en el propio servidor y `artifacts/` no se sube a git; nunca cargar uno de terceros (pickle) | `backend/training/train.py`, `backend/.gitignore` |
+| Acceso a S3 por rol IAM del EC2; sin credenciales de AWS en el codigo ni en `.env` | `backend/app/storage.py`, `backend/app/config.py` |
+| Security Group: 22 solo desde tu IP; 8000 abierto para la app | `docs/BACKEND.md` |
+| El modelo (`model.joblib`) se genera en el notebook y se sube a S3; `artifacts/` no se sube a git; nunca cargar un pickle de terceros | `backend/.gitignore`, `backend/app/storage.py` |
 
 ## Pendiente
 
-- Monitoreo y alertas (por ejemplo CloudWatch) sobre los logs de `journalctl` y Nginx.
-- Revisión periódica de dependencias: `npm run audit:deps` y `pip-audit` en el backend.
-- Copias de seguridad de `backend/artifacts/` en el EC2 antes de reentrenar.
+- Monitoreo y alertas (por ejemplo CloudWatch) sobre los logs del servicio.
+- Revision periodica de dependencias: `npm run audit:deps` y `pip-audit` en el backend.
+- Para produccion real: poner la API detras de HTTPS (proxy inverso o balanceador) y restringir el acceso al puerto 8000.

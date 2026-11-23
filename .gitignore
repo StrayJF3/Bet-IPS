@@ -1,0 +1,27 @@
+# Basura general que nunca debe subirse al repositorio.
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+
+# Node / frontend (por si acaso; el frontend tiene su propio .gitignore)
+node_modules/
+dist/
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+
+# Artefactos del modelo (se generan y se suben a S3, no al repo)
+artifacts/
+
+# Sistema
+.DS_Store
+Thumbs.db
