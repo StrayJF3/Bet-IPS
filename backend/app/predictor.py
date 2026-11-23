@@ -8,11 +8,15 @@ import numpy as np
 import pandas as pd
 
 from app.features import CLASSES, FEATURES, TeamState, build_row
+from app.storage import ensure_artifacts
 from app.teams import TEAMS_BY_ID, Team
 
 
 class Predictor:
     def __init__(self, artifacts_dir: Path):
+        # Descarga los artefactos desde S3 (si hay bucket configurado) o valida que
+        # esten en local. Ocurre una sola vez, al arrancar la API.
+        artifacts_dir = ensure_artifacts(artifacts_dir)
         self.model = joblib.load(artifacts_dir / "model.joblib")
         self.meta = json.loads((artifacts_dir / "metrics.json").read_text(encoding="utf-8"))
         self.raw = json.loads((artifacts_dir / "team_state.json").read_text(encoding="utf-8"))

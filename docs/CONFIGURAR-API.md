@@ -8,7 +8,6 @@ La URL de la API del modelo (el EC2) se configura en **un solo lugar** del front
 |---|---|---|
 | Apuntar el frontend a otra API | `frontend/.env` | `VITE_API_BASE_URL=...` |
 | Permitir que un dominio de frontend use la API | `backend/.env` (en el EC2) | `ALLOWED_ORIGINS=...` |
-| Cambiar el dominio que atiende Nginx | `/etc/nginx/sites-available/bet-ips` (en el EC2) | `server_name ...` |
 | Cambiar las rutas (`/api/predict`, etc.) | `frontend/src/services/forecastService.ts` y `backend/app/main.py` | Deben coincidir en ambos |
 
 ---
@@ -67,21 +66,19 @@ Si la página muestra "No se pudo conectar con el modelo" y en la consola del na
 
 ---
 
-## 3. Si todavía no tienes dominio
+## 3. Probar con la IP publica del EC2 (sin dominio)
 
-Mientras pruebas puedes usar la IP pública del EC2 (mejor una Elastic IP):
+Mientras pruebas, puedes apuntar el frontend directamente a la IP publica del EC2 (mejor una Elastic IP para que no cambie):
 
-1. En Nginx (`/etc/nginx/sites-available/bet-ips`): `server_name 3.85.10.20;` (tu IP) y `sudo systemctl reload nginx`.
-2. En `frontend/.env`: `VITE_API_BASE_URL=http://3.85.10.20` y usar **`npm run dev`** (en modo desarrollo se permite `http`).
-3. En `backend/.env`: `ALLOWED_ORIGINS=http://localhost:5173`.
+1. En `frontend/.env`: `VITE_API_BASE_URL=http://TU_IP_EC2:8000` y usar **`npm run dev`** (en desarrollo se permite `http`).
+2. En `backend/.env` (en el EC2): `ALLOWED_ORIGINS=http://localhost:5173` (o el origen desde donde abras el frontend).
+3. Asegurate de que el Security Group del EC2 tenga abierto el **puerto 8000**.
 
-Para producción necesitas un dominio con certificado (Let's Encrypt no emite certificados para IPs): `sudo certbot --nginx -d api.tu-dominio.com` y luego cambiar el `.env` a `https://api.tu-dominio.com`.
-
----
+> Para una entrega academica con la IP del EC2 esto es suficiente. Para produccion real conviene poner la API detras de HTTPS (un proxy inverso o balanceador) y usar un dominio.
 
 ## 4. Comprobar que quedó bien
 
-1. `curl https://api.tu-dominio.com/api/health` debe responder `{"status":"ok", ...}`.
+1. `curl http://TU_IP_EC2:8000/api/health` debe responder `{"status":"ok", ...}`.
 2. En la página, arriba a la derecha, el punto debe estar **verde** con "Modelo en línea".
 3. Al elegir dos selecciones debe aparecer el diagrama de barras.
 

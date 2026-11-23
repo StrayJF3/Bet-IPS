@@ -117,10 +117,7 @@ El backend debe estar encendido (ver [BACKEND.md](./BACKEND.md)); si no, la pág
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Compila a `dist/` para producción |
 | `npm run preview` | Sirve `dist/` en local |
-| `npm test` | Pruebas (vitest) |
 | `npm run typecheck` | Revisión de tipos |
-| `npm run lint` | Reglas de calidad (ESLint) |
-| `npm run format` | Formatea el código (Prettier) |
 
 ## 5. Publicar el frontend
 
@@ -137,12 +134,10 @@ El backend debe estar encendido (ver [BACKEND.md](./BACKEND.md)); si no, la pág
 
 ## 7. Convenciones de código (clean code)
 
-Antes de subir cambios: `npm run lint`, `npm run format:check`, `npm test` y `npm run build` deben pasar sin errores ni avisos.
+Antes de subir cambios: `npm run typecheck` y `npm run build` deben pasar sin errores.
 
 - **Una responsabilidad por archivo**: los componentes grandes se dividen (p. ej. `forecast/`); la lógica que no es de React va en funciones puras (`ballPhysics.ts`, `utils/`).
-- **Funciones cortas**: ESLint avisa si una función pasa de 80 líneas o de complejidad 12 (`eslint.config.js`).
 - **Sin duplicar**: lo que se repite va a `components/ui/` o a un hook.
+- **Tipos estrictos**: TypeScript marca variables y parámetros sin usar.
 - **Sin números mágicos**: valores fijos con nombre en mayúsculas (`DEFAULT_TIMEOUT_MS`, `MAX_QUERY_LENGTH`, `BAR_MAX_HEIGHT`).
 - **Nombres claros** en inglés para el código; textos de la interfaz y documentación en español.
-- **Sin código muerto**: TypeScript estricto y ESLint marcan variables y parámetros sin usar.
-- **Formato automático** con Prettier (`.prettierrc.json`, 120 columnas, comillas simples).
