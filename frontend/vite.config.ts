@@ -12,7 +12,7 @@ const CSP = [
   "style-src 'self'",
   "img-src 'self' data:",
   "font-src 'self'",
-  "connect-src 'self' https:",
+  "connect-src 'self' http: https:",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -36,5 +36,4 @@ export default defineConfig({
     },
   },
   build: { sourcemap: false },
-  test: { environment: 'node' },
 });
