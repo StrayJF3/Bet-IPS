@@ -1,6 +1,5 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath, URL } from 'node:url';
 
 /**
  * Cabeceras de seguridad. La CSP solo se inyecta en el build de produccion:
@@ -28,7 +27,6 @@ const cspPlugin = (): Plugin => ({
 
 export default defineConfig({
   plugins: [react(), cspPlugin()],
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   server: {
     headers: {
       'X-Content-Type-Options': 'nosniff',
